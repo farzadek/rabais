@@ -1,0 +1,546 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background:#fff;">
+    <div class="topCover"></div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-rabais-collapse" style="background-color:#000;">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+<!--            <div class="topHi">Hi! <span class="user"></span>,  
+            </div>-->
+        </div>
+
+        <div class="collapse navbar-collapse navbar-rabais-collapse">
+            <ul class="nav navbar-nav navbar-centre headMenu" >
+                <li><span class="link" ng-click="signInClicked()">Sign in</span></li>
+                <li><span class="link" ng-click="registerClicked()">s'inscrire</span></li>
+                <li><span class="link" ng-click="registerMembreClicked()">Devenez membre</span></li>
+                <li><span class="link" ng-click="registerDetailClicked()">Devenez détaillant participant</span></li> 
+            </ul>
+        </div>
+      <!--  <li class="basket"><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>  -->
+    </div>
+</nav> 
+
+<section id="searchBar">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+  
+            <div class="col-lg-10" style="padding:0;padding-left:0;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary" style="border-radius:0;" type="button">Search</button>
+                        </span>
+                </div><!-- /input-group -->
+            </div><!-- /.col-lg-12 -->
+            <div class="col-lg-1" style="padding-right:0;padding-left:0;">
+                <select>
+                    <option>All Categories</option>
+                    <option>Vetement</option>
+                    <option>Grands Magasines</option>
+                    <option>Beaté et Santé</option>
+                    <option>Restaurant et Café</option>
+                </select>
+            </div>
+      <!--      <div class="col-lg-1" style="padding-top: 8px; float: left;">Advanced</div> -->
+        </div>
+
+    </div>
+</div> 
+</section>
+
+<section id="login">
+        <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12" style="padding:10px;">
+            <img class="img-responsive" src="images/girl1.jpg" width="100%">
+        </div>
+        <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+            <div id="inscriptsForm" ng-hide="inscriptForm">
+                <h1>Inscription</h1>
+
+                <div>
+                <img src="images/lbtn.jpg" class="inscriptTypeImg" ng-model="inscriptType" ng-click="lInscriptTypeClicked()">
+                <div class="inscriptType" ng-switch on="inscriptType">
+                    <span ng-switch-when=1>Gratuit</span>
+                    <span ng-switch-when=2>Membre <a href="" style="font-size:.6em;">Devenez membre à vie</a></span>
+                    <span ng-switch-when=3>Détaillant participant</span>
+                </div>
+                <img src="images/rbtn.jpg" class="inscriptTypeImg" ng-model="inscriptType" ng-click="rInscriptTypeClicked()">
+                </div>
+
+                    <form>
+    <div ng-switch on="inscriptType">
+
+    <div ng-switch-when=1>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" id="name1Inscript" ng-model="nameInscript" ng-blur="inscriptFormCheck()" placeholder="Prénom"><span class="errInscript">{{nameCorrecrMessage}}</span>
+                        </fieldset>
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" id="familInscript" ng-model="familInscript" ng-blur="inscriptFormCheck()" placeholder="Nom de famille"><span class="errInscript">{{familCorrecrMessage}}</span>
+                        </fieldset>
+                    </div>  
+     <!--               <fieldset class="form-group">
+                        <input type="email" class="form-control" id="emailInscript" placeholder="e-mail" ng-model="emailInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{emailCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" id="usernameInscript" placeholder="mot d'utilisateur" ng-model="usernameInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{usernameCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" id="passwordInscript1" placeholder="Password" ng-model="pass1Inscript" ng-blur="inscriptFormCheck()">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" id="passwordInscript2" placeholder="Confirm Password" ng-model="pass2Inscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{passCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group col-lg-12">
+                        <p style="font-size: 1.5em;">Date de naissance</p>
+                        <select id="bdayInscript" class="c-select" style="width:45px;border-radius:5px 0 0 5px;margin:0;padding:0;height:40px;">
+                          <option>01</option>
+                          <option>02</option>
+                          <option>03</option>
+                          <option>04</option>
+                          <option>05</option>
+                          <option>06</option>
+                          <option>07</option>
+                          <option>08</option>
+                          <option>09</option>
+                          <option>10</option>           
+                          <option>11</option>           
+                          <option>12</option>
+                          <option>13</option>           
+                          <option>14</option>           
+                          <option>15</option>
+                          <option>16</option>
+                          <option>17</option>
+                          <option>18</option>
+                          <option>19</option>
+                          <option>20</option>
+                          <option>21</option>
+                          <option>22</option>
+                          <option>23</option>
+                          <option>24</option>
+                          <option>25</option>           
+                          <option>26</option>           
+                          <option>27</option>
+                          <option>28</option>           
+                          <option>29</option>           
+                          <option>30</option>              
+                          <option>31</option>              
+                        </select>
+                        <select id="bmonthInscript" style="width:40px;margin:0;padding:0;border-radius:0;height:40px;">
+                          <option>01</option>
+                          <option>02</option>
+                          <option>03</option>
+                          <option>04</option>
+                          <option>05</option>
+                          <option>06</option>
+                          <option>07</option>
+                          <option>08</option>
+                          <option>09</option>
+                          <option>10</option>           
+                          <option>11</option>           
+                          <option>12</option>           
+                        </select>
+                        <select id="byearInscript" style="width:80px;border-radius:0 5px 5px 0;height:40px;">
+                          <option>2016</option>
+                          <option>2015</option>
+                          <option>2014</option>
+                          <option>2013</option>
+                          <option>2012</option>
+                        </select>  
+                        </fieldset>  -->
+
+                    <fieldset class="form-group col-lg-12">
+                        <button type="submit" class="btn btn-success" ng-disabled="inscriptButtonDisable" ng-click="inscriptClicked()">Inscription</button>
+                    </fieldset> 
+                                    </form>
+
+    </div>  <!--  div ng-switch1 -->
+
+  <!--  <div ng-switch-when=2>
+                    <h3>Seulement 49,99$</h3>
+                    <form>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" id="nameInscript" ng-model="nameMemberInscript" ng-blur="inscriptFormCheck()" placeholder="Prénom"><span class="errInscript">{{nameMemberCorrecrMessage}}</span>
+                        </fieldset>
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" id="familInscript" ng-model="familMemberInscript" ng-blur="inscriptFormCheck()" placeholder="Nom de famille"><span class="errInscript">{{familMemberCorrecrMessage}}</span>
+                        </fieldset>
+                    </div>  
+                    <fieldset class="form-group">
+                        <input type="email" class="form-control" id="emailInscript" placeholder="e-mail" ng-model="emailMemberInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{emailMemberCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" id="usernameInscript" placeholder="mot d'utilisateur" ng-model="usernameMemberInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{usernameMemberCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" id="passwordInscript1" placeholder="Password" ng-model="pass1MemberInscript" ng-blur="inscriptFormCheck()">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" id="passwordInscript2" placeholder="Confirm Password" ng-model="pass2MemberInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{passMemberCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group col-lg-12">
+                        <button type="submit" class="btn btn-success" ng-disabled="inscriptMembreButtonDisable" ng-click="inscriptClicked()">Inscription</button>
+                    </fieldset>
+                </form>
+    </div>  <!--  div ng-switch2 -->
+<!--
+    <div ng-switch-when=3>
+                    <form>
+                    <div class="row">
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control" id="nameInscript" ng-model="nameCoInscript" ng-blur="inscriptCoFormCheck()" placeholder="Nom de co." min-length="2"><span class="errInscript">{{nameCoCorrectMessage}}</span>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control" id="managerInscript" ng-model="managerInscript" ng-blur="inscriptCoFormCheck()" placeholder="Nom de gérant(e)" min-length="2"><span class="errInscript">{{managerCorrectMessage}}</span>
+                        </fieldset>
+                    <fieldset class="form-group">
+                        <input type="email" class="form-control" id="emailCoInscript" placeholder="e-mail" ng-model="emailCoInscript" ng-blur="inscriptCoFormCheck()"><span class="errInscript">{{emailCoCorrectMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="tel" class="form-control" id="telCoInscript" placeholder="téléphone" ng-model="telCoInscript" ng-blur="inscriptFormCheck()"><span class="errInscript">{{telCoCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" id="usernameInscript" placeholder="mot d'utilisateur" ng-model="usernameCoInscript" ng-blur="inscriptCoFormCheck()" min-length="6" max-length="20"><span class="errInscript">{{usernameCoCorrecrMessage}}</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" id="passwordInscript1" placeholder="Password" min-length="6" max-length="20"ng-model="pass1CoInscript" ng-blur="inscriptCoFormCheck()">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="password" class="form-control" min-length="6" max-length="20" id="passwordInscript2" placeholder="Confirm Password" ng-model="pass2CoInscript" ng-blur="inscriptCoFormCheck()"><span class="errInscript">{{passCoCorrecrMessage}}</span>
+                    </fieldset>
+                    </div>  
+
+                    <fieldset class="form-group col-lg-12">
+                        <button type="submit" class="btn btn-success" ng-disabled="inscriptCoButtonDisable" ng-click="inscriptCoClicked()">Inscription</button>
+                    </fieldset>
+                </form>
+    </div> -->
+
+
+    </div>      <!--  div ng-switch3 --> 
+
+            </div>  <!--  div switch -->
+
+
+
+<!-- login              -----------------------   -->
+            <div id="loginsForm" ng-hide="loginsForm">
+                <h1>Login</h1>
+                <form>
+                    <fieldset class="form-group col-lg-12">
+                        <input type="text" class="form-control" id="usernameLogin" placeholder="mot d'utilisateur">
+                    </fieldset>
+                    <fieldset class="form-group col-lg-12">
+                        <input type="password" class="form-control" id="passwordLogin" placeholder="mot de passe">
+                    </fieldset>
+                    <fieldset class="form-group col-lg-12">
+                        <button type="submit" class="btn btn-success" ng-disabled="loginDisable" ng-click="loginClicked()">Login</button>
+                    </fieldset>    
+                </form>
+            </div>
+
+        </div> 
+</section>
+
+<section class="row groupItems">
+
+</section>
+
+
+<!-- ----------------------------------------------------------------------------------- -->
+
+
+
+
+<section class="row groupItems">
+    <div class="container" style="border-bottom: 1px solid #ccc;">
+            <ul class="headMenu2">
+                <li><a href="#/">Grands magasins</a></li>
+                <li><a href="#/">Électronique</a></li>
+                <li><a href="#/">Épicerie</a></li>
+                <li><a href="#/">Santé et beauté</a></li>
+                <li><a href="#/">Maison et Jardin</a></li>
+                <li><a href="#/">Restaurants et Cafés</a></li>
+                <li><a href="#/">Specialité</a></li>
+                <li><a href="#/">Sports et Loisirs</a></li>
+                <li><a href="#/">Voyages</a></li>
+            </ul>
+    </div>
+</section>
+
+<section class="row vedette" id="vedettes">
+    <div class="container">
+        <h1 style="text-align:center;">Articles Vedettes</h1>
+        <div class="row vedItems">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved01.jpg" class="img-responsive">
+                   <div class="ribbon"><span>10% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved02.jpg" class="img-responsive">
+                   <div class="ribbon"><span>10% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved03.jpg" class="img-responsive">
+                   <div class="ribbon"><span>7% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved04.jpg" class="img-responsive">
+                   <div class="ribbon"><span>15% OFF</span></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row vedItems" id="vedItemsMore" ng-show="vedItemsMore">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved05.jpg" class="img-responsive">
+                   <div class="ribbon"><span>3% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved06.jpg" class="img-responsive">
+                   <div class="ribbon"><span>5% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved07.jpg" class="img-responsive">
+                   <div class="ribbon"><span>5% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved08.jpg" class="img-responsive">
+                   <div class="ribbon"><span>3% OFF</span></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button ng-click="showVedette()" class="btn btn-default" style="width:100%;margin:5px 0 30px;font-size: 18px;">Liste de tous les vedettes</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="row prim">
+    <div class="container">
+        <h1>Détaillants en primeurs</h1>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+            Tout le monde pourra trouver son bonheur parmi les nombreuses catégories de notre liste toujours plus longue de détaillants participants. C'est plus facile de payer vos achats quotidiens avec des cartes-cadeaux plustôt qu'avec de l'argent comptant, une carte de crédit ou de debit.
+            </div>
+        </div>
+
+        <div class="row" style="padding:5px;">
+
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>IGA</div>   
+                    <img src="images/prim/img01.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Gallery64</div>   
+                    <img src="images/prim/img02.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Canadian tire</div>   
+                    <img src="images/prim/img03.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Subway</div>   
+                    <img src="images/prim/img04.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Dagwoods</div>   
+                    <img src="images/prim/img05.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>J&E Auto repair</div>   
+                    <img src="images/prim/img06.jpg" width="100%">
+                </div>
+            </div>
+
+
+
+            <div class="row" style="margin-bottom:60px;">
+                <div class="col-lg-4 col-lg-offset-4">
+     <!--               <button class="btn btn-default" style="width:100%;margin:5px 0 30px;font-size: 20px;">Liste de tous les primeurs</button> -->
+                </div>
+            </div>
+
+        </div>
+
+        <div class="primBottom"></div>
+        <div><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+
+    </div>
+
+</section>
+
+<section class="row prim" id="prim">
+    <div class="container">
+        <h1>Nos magasins détaillants</h1>
+        <div class="row">
+        </div>
+
+        <div class="row" style="padding:5px;">
+
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>IGA</div>   
+                    <img src="images/prim/img01.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>METRO</div>   
+                    <img src="images/prim/img02.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Canadian tire</div>   
+                    <img src="images/prim/img03.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Subway</div>   
+                    <img src="images/prim/img04.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Dagwood</div>   
+                    <img src="images/prim/img05.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>J&E Auto repair</div>   
+                    <img src="images/prim/img06.jpg" width="100%">
+                </div>
+            </div>
+
+        <div class="row primItems" id="primItemsMore" ng-show="primItemsMore">
+
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Midas</div>   
+                    <img src="images/prim/img07.jpg" width="100%">
+                </div>
+            </div>            
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Ardene</div>   
+                    <img src="images/prim/img08.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>YvesSaintLaurent</div>   
+                    <img src="images/prim/img09.jpg" width="100%">
+                </div>
+            </div>            
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>METRO</div>   
+                    <img src="images/prim/img10.jpg" width="100%">
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div class="row" style="margin-bottom:60px;">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button class="btn btn-default" style="width:100%;margin:5px 0;font-size: 20px;">Liste de tous les détaillants</button>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<!--
+<div id="myCarousel" class="carousel slide">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+        <li data-target="#myCarousel" data-slide-to="4"></li>
+        <li data-target="#myCarousel" data-slide-to="5"></li>
+    </ol>
+
+    <div class="carousel-inner" style="width:100%; height:100%;font-size:2em;">
+        <div class="item active">
+            <img src="images/sld01.jpg">
+            <div class="carousel-caption">
+                <p>Reduce costs</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/sld02.jpg">
+            <div class="carousel-caption">
+                <h1>Control costs and Income groups</h1>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/sld03.jpg">
+            <div class="carousel-caption">
+                <p>Manage your money</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/sld04.jpg">
+            <div class="carousel-caption">
+                <p>We are negotiators</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/sld05.jpg">
+            <div class="carousel-caption">
+                <p>See what happened to your money</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="images/sld06.jpg">
+            <div class="carousel-caption">
+                <p>Let's reduce expenses</p>
+            </div>
+        </div>
+</div>
+
+    <!-- Controls 
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <span class="icon-prev"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+        <span class="icon-next"></span>
+    </a> -->
+<!--</div>
+
+

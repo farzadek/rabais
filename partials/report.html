@@ -1,0 +1,39 @@
+<div ng-controller="reportCtrl">
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">Report
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#/">Home</a>
+                </li>
+                <li class="active">Report</li>
+            </ol>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <button type="button" class="btn w100" id="c1" ng-click="chart1()">Incomes & Expenses</button>
+            <button type="button" class="btn w100" id="c2" ng-click="chart2()">Expenses by Category</button>
+            <button type="button" class="btn w100" id="c3" ng-click="chart3()">Incomes by Category</button>
+        </div>
+
+        <div class="col-md-9">
+            <div ng-show="showChart1" id="chart1"></div>
+            <div ng-show="showChart2" id="chart2"></div>
+            <div ng-show="showChart3" id="chart3"></div>
+        </div>
+        
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+</div>

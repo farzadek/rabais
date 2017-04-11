@@ -1,0 +1,539 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background:#fff;">
+    <div class="topCover"></div>
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-rabais-collapse" style="background-color:#000;">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div class="topHi" ng-show="notLoggedIn"><span class="link" onclick="signInClicked()">Sign In</span> or <span class="link" onclick="registerClicked()">Register</span></div>
+            <div class="topHi" ng-show="!notLoggedIn">Hi <span class="link">{{signIn}}</span></div>
+        </div>
+
+        <div class="collapse navbar-collapse navbar-rabais-collapse">
+            <ul class="nav navbar-nav navbar-centre headMenu" >
+                <li><a href="#/">Daily Deals</a></li>
+                <li><a href="#/giftCards">Gift Cards</a></li>
+                <li><a href="#/sell">Sell</a></li>
+                <li><a href="#/contact">Help & Contact</a></li>
+            </ul>
+        </div>
+        <li class="basket"><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li> 
+    </div>
+
+<section id="searchBar" ng-show="showSearchBar">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-xs-12">
+  
+            <div class="col-sm-2 col-xs-3">
+                <button class="btn btn-primary" ng-click="logedOut()" style="float: left;">Log out</button>
+            </div>
+            <div class="col-sm-5 col-xs-9" style="padding:0;">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-primary" style="border-radius:0;" type="button">Search</button>
+                        </span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-8">
+                <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="selected" ng-change="sortOptionChanged()"></select>
+            </div>
+            <div class="col-sm-2 col-xs-4">
+                <button type="button" style="float: right;" class="btn btn-warning btn-md shopcard" data-toggle="modal" data-target="#myModal" ng-click="orderFinish()"><span class="glyphicon glyphicon-shopping-cart"></span> {{totalPrice | currency}} <sub>+TX</sub></button>
+            </div>
+        </div>
+
+    </div>
+</div> 
+</section>
+
+</nav> 
+
+
+
+
+<section id="login" ng-show="showStore">
+    <div class="col-lg-8 col-md-7 col-sm-12 col-xs-12" style="padding:10px;">
+        <img ng-show="userFullInfo" class="img-responsive" src="images/girl1.jpg" width="100%">
+
+        <div ng-show="!userFullInfo" class="userFullInfo">
+                  <form name="userFullInfoForm" ng-submit="submitUserFullInfoForm(userFullInfoForm.$valid)" novalidates>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-3">
+                            <label for="vpcode">VP Code</label>
+                            <input type="text" class="form-control" id="vpcode" name="vpcode" ng-model="currentUserVpcode" ng-readonly="true">
+                        </fieldset>
+                        <fieldset class="form-group col-lg-5">
+                            <label for="name">Nom</label>
+                            <input type="text" class="form-control" id="name" name="name" ng-model="currentUserName" placeholder="Nom" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="userFullInfoForm.name.$invalid && !userFullInfoForm.name.$pristine">Min. 2 chars</span>
+                        </fieldset>
+                        <fieldset class="form-group col-lg-4">
+                            <label for="type">Type</label>
+                            <select name="type" id="type" class="form-control" ng-model="currentUsertype">
+                              <option value="Gratuit">Gratuit</option>
+                              <option value="Membre">Membre</option>
+                              <option value="Détaillant participant">Détaillant participant</option>
+                            </select>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-6">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address" ng-model="currentUseraddress" placeholder="Address">
+                        </fieldset>
+                        <fieldset class="form-group col-lg-3">
+                            <label for="city">Ville</label>
+                            <input type="text" id="city" class="form-control" name="city" ng-model="currentUsercity" placeholder="Ville">
+                        </fieldset>
+                        <fieldset class="form-group col-lg-3">
+                            <label for="cp">Code Postale</label>
+                            <input type="text" id="cp" class="form-control" name="cp" ng-model="currentUserCp" placeholder="Code postale" ng-pattern="/^[a-z]+[0-9]+[a-z]+[0-9]+[a-z]+[0-9]$/"><span class="errInscript" ng-show="currentUserCp.$invalid && !currentUserCp.$pristine">Code postale A0A0A0</span>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                    <fieldset class="form-group col-lg-3">
+                        <label for="tel">No de téléphone</label>
+                        <input type="text" id="tel" class="form-control" name="tel" ng-model="currentUsertel" placeholder="Tel" ng-pattern="/[1-9]{1}\d{2}-\d{3}-\d{4}/"><span class="errInscript" ng-show="currentUsertel.$invalid && !currentUsertel.$pristine">entrez Tel correcte 123-456-7890</span>
+                    </fieldset>
+                    <fieldset class="form-group col-lg-3">
+                        <label for="logo">Logo</label>
+                        <input type="file" id="logo" class="form-control" name="logo" ng-model="currentUserLogo" ><span class="errInscript" ng-show="currentUserLogo.$invalid && !currentUserLogo.$pristine">Fichier n'est pas correct</span>
+                    </fieldset>
+                    </div>
+
+                    <fieldset class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="userFullInfoForm.$invalid">Sauvegarder</button>
+                        <button type="submit" class="btn btn-xs btn-warning">Annuler</button>
+                        <button type="button" class="btn btn-xs btn-info" disabled="disabled">Changer mot de passe</button>
+                    </fieldset> 
+                  </form>
+          
+        </div>
+    </div>
+    
+    <div class="col-lg-4 col-md-5 col-sm-12 col-xs-12"> 
+        <div id="inscriptsForm" ng-hide="inscriptForm"> 
+            <h1>Inscription</h1>
+
+            <div>
+                <img src="images/lbtn.jpg" class="inscriptTypeImg" ng-model="inscriptType" ng-click="lInscriptTypeClicked()">
+                <div class="inscriptType">
+                    <span>{{inscriptTypeTitle}}</span>
+                </div>
+                <img src="images/rbtn.jpg" class="inscriptTypeImg" ng-model="inscriptType" ng-click="rInscriptTypeClicked()">
+            </div>
+
+                <div ng-show="switch1"> 
+                  <form name="gratuitMemberForm" ng-submit="submitGratuitForm(gratuitMemberForm.$valid)" novalidates>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" name="nameInscript" ng-model="nameInscript" placeholder="Prénom" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="gratuitMemberForm.nameInscript.$invalid && !gratuitMemberForm.nameInscript.$pristine">Min 2 chars</span>
+                        </fieldset>
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" name="familInscript" ng-model="familInscript" placeholder="Nom" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="gratuitMemberForm.familInscript.$invalid && !gratuitMemberForm.familInscript.$pristine">Min. 2 chars</span>
+                        </fieldset>
+                    </div>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="emailInscript" ng-model="emailInscript" placeholder="Email" ng-required="true" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"><span class="errInscript" ng-show="gratuitMemberForm.emailInscript.$invalid && !gratuitMemberForm.emailInscript.$pristine">Entrez l'adresse e-mail correcte</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="telInscript" ng-model="telInscript" placeholder="Tel" ng-required="true" ng-pattern="/[1-9]{1}\d{2}-\d{3}-\d{4}/"><span class="errInscript" ng-show="gratuitMemberForm.telInscript.$invalid && !gratuitMemberForm.telInscript.$pristine">entrez Tel correcte 123-456-7890</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="usernameInscript" ng-model="usernameInscript" placeholder="mot d'utilisateur" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="gratuitMemberForm.usernameInscript.$invalid && !gratuitMemberForm.usernameInscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass1Inscript" ng-model="pass1Inscript" placeholder="Mot de passe" ng-required="true" ng-minlength="6" ng-change="{{ (pass1Inscript && pass2Inscript) ? passInscriptCheck( pass1Inscript , pass2Inscript) : '' }}"><span class="errInscript" ng-show="gratuitMemberForm.pass1Inscript.$invalid && !gratuitMemberForm.pass1Inscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass2Inscript" ng-model="pass2Inscript" placeholder="Confirmation de mot de passe" ng-change="{{ (pass1Inscript==pass2Inscript && pass1Inscript) ? passInscriptCheck( pass1Inscript , pass2Inscript) : '' }}" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="gratuitMemberForm.pass2Inscript.$invalid && !gratuitMemberForm.pass2Inscript.$pristine && passMatch">Mot de passe n'est pas correcte</span>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="gratuitMemberForm.$invalid && !passMatch">Inscription</button>
+                    </fieldset> 
+                  </form>
+                </div>  
+
+
+                <div  ng-show="switch2">
+                    <p><a href="" style="font-size:1.1em;">Devenez membre à vie</a>(Seulement 49,99$)</p>
+                  <form name="memberForm" ng-submit="submitMemberForm(memberForm.$valid)" novalidates>
+                    <div class="row">
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" name="nameMemberInscript" ng-model="nameMemberInscript" placeholder="Prénom" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="memberForm.nameMemberInscript.$invalid && !memberForm.nameMemberInscript.$pristine">Min 2 chars</span>
+                        </fieldset>
+                        <fieldset class="form-group col-lg-6">
+                            <input type="text" class="form-control" name="familMemberInscript" ng-model="familMemberInscript" placeholder="Nom" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="memberForm.familMemberInscript.$invalid && !memberForm.familMemberInscript.$pristine">Min. 2 chars</span>
+                        </fieldset>
+                    </div>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="emailMemberInscript" ng-model="emailMemberInscript" placeholder="Email" ng-required="true" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"><span class="errInscript" ng-show="memberForm.emailMemberInscript.$invalid && !memberForm.emailMemberInscript.$pristine">Entrez l'adresse e-mail correcte</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="telMemberInscript" ng-model="telMemberInscript" placeholder="Tel" ng-required="true" ng-pattern="/[1-9]{1}\d{2}-\d{3}-\d{4}/"><span class="errInscript" ng-show="memberForm.telMemberInscript.$invalid && !memberForm.telMemberInscript.$pristine">entrez Tel correcte (123-456-7890)</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="usernameMemberInscript" ng-model="usernameMemberInscript" placeholder="mot d'utilisateur" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="memberForm.usernameMemberInscript.$invalid && !memberForm.usernameMemberInscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass1MemberInscript" ng-model="pass1MemberInscript" placeholder="Mot de passe" ng-required="true" ng-minlength="6" ng-change="passMemberInscriptCheck( pass1MemberInscript , pass2MemberInscript)"><span class="errInscript" ng-show="memberForm.pass1MemberInscript.$invalid && !memberForm.pass1MemberInscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass2MemberInscript" ng-model="pass2MemberInscript" placeholder="Confirmation de mot de passe" ng-change="passMemberInscriptCheck( pass1MemberInscript , pass2MemberInscript)" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="memberForm.pass2MemberInscript.$invalid && !memberForm.pass2MemberInscript.$pristine && passMemberMatch">Mot de passe n'est pas correcte</span>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="memberForm.$invalid">Inscription</button>
+                    </fieldset> 
+                  </form>
+                </div>
+
+    
+                <div  ng-show="switch3">
+                  <form name="detailForm" ng-submit="submitDetailForm(detailForm.$valid)" novalidates>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="nameDetailInscript" ng-model="nameDetailInscript" placeholder="Nom de Commerce" ng-required="true" ng-minlength="2"><span class="errInscript" ng-show="detailForm.nameDetailInscript.$invalid && !detailForm.nameDetailInscript.$pristine">Min. 2 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="emailDetailInscript" ng-model="emailDetailInscript" placeholder="Email" ng-required="true" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/"><span class="errInscript" ng-show="detailForm.emailDetailInscript.$invalid && !detailForm.emailDetailInscript.$pristine">Entrez l'adresse e-mail correcte</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="telDetailInscript" ng-model="telDetailInscript" placeholder="Tel" ng-required="true" ng-pattern="/[1-9]{1}\d{2}-\d{3}-\d{4}/"><span class="errInscript" ng-show="detailForm.telDetailInscript.$invalid && !detailForm.telDetailInscript.$pristine">entrez Tel correcte (123-456-7890)</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="usernameDetailInscript" ng-model="usernameDetailInscript" placeholder="Mot d'utilisateur" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="detailForm.usernameDetailInscript.$invalid && !detailForm.usernameDetailInscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass1DetailInscript" ng-model="pass1DetailInscript" placeholder="Mot de passe" ng-required="true" ng-minlength="6" ng-change="passDetailInscriptCheck( pass1DetailInscript , pass2DetailInscript)"><span class="errInscript" ng-show="detailForm.pass1DetailInscript.$invalid && !detailForm.pass1DetailInscript.$pristine">Min. 6 chars</span>
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="pass2DetailInscript" ng-model="pass2DetailInscript" placeholder="Confirmation de mot de passe" ng-change="passDetailInscriptCheck( pass1DetailInscript , pass2DetailInscript)" ng-required="true" ng-minlength="6"><span class="errInscript" ng-show="detailForm.pass2DetailInscript.$invalid && !detailForm.pass2DetailInscript.$pristine && passDetailMatch">Mot de passe n'est pas correcte</span>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="detailForm.$invalid">Inscription</button>
+                    </fieldset> 
+                  </form>
+
+                </div>      
+
+
+
+
+            <div id="loginsForm" ng-show="loginsForm">
+                  <form name="loginForm" ng-submit="submitLoginForm(loginForm.$valid)" novalidates>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="usernameLogin" ng-model="usernameLogin" placeholder="Mot d'utilisateur" ng-required="true">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" name="passwordLogin" ng-model="passwordLogin" autocomplete="off" placeholder="Mot de passe" ng-required="true">
+                    </fieldset>
+                    <span class="errInscript" ng-show="!loginForm.passwordLogin.$pristine && !loginForm.usernameLogin.$pristine && userNotFoundMessageShow">M d'utilisateur ou Mot de passe sont pas correct</span>
+                    <fieldset class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="loginForm.passwordLogin.$pristine && loginForm.usernameLogin.$pristine">Login</button>
+                    </fieldset> 
+                  </form>
+                  <p style="color:blue;">{{content}}</p>
+            </div>
+
+
+
+        </div> 
+    </div>
+</section>
+
+
+
+<section class="row groupItems" ng-show="showStore">
+
+</section>
+
+
+<section class="row vedette" id="vedettes" ng-show="showStore">
+    <div class="container">
+        <h1 style="text-align:center;">Articles Vedettes</h1>
+        <div class="row vedItems">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved01.jpg" class="img-responsive">
+                   <div class="ribbon"><span>10% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved02.jpg" class="img-responsive">
+                   <div class="ribbon"><span>10% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved03.jpg" class="img-responsive">
+                   <div class="ribbon"><span>7% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved04.jpg" class="img-responsive">
+                   <div class="ribbon"><span>15% OFF</span></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row vedItems" id="vedItemsMore" ng-show="vedItemsMore">
+
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved05.jpg" class="img-responsive">
+                   <div class="ribbon"><span>3% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved06.jpg" class="img-responsive">
+                   <div class="ribbon"><span>5% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved07.jpg" class="img-responsive">
+                   <div class="ribbon"><span>5% OFF</span></div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+                <div class="box"><img src="images/vedette/ved08.jpg" class="img-responsive">
+                   <div class="ribbon"><span>3% OFF</span></div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button ng-click="showVedette()" class="btn btn-default" style="width:100%;margin:5px 0 30px;font-size: 18px;">Liste de tous les vedettes</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="row prim" ng-show="showStore">
+    <div class="container">
+        <h1>Détaillants en primeurs</h1>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+            Tout le monde pourra trouver son bonheur parmi les nombreuses catégories de notre liste toujours plus longue de détaillants participants. C'est plus facile de payer vos achats quotidiens avec des cartes-cadeaux plustôt qu'avec de l'argent comptant, une carte de crédit ou de debit.
+            </div>
+        </div>
+
+        <div class="row" style="padding:5px;">
+
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>IGA</div>   
+                    <img src="images/prim/img01.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Gallery64</div>   
+                    <img src="images/prim/img02.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Canadian tire</div>   
+                    <img src="images/prim/img03.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Subway</div>   
+                    <img src="images/prim/img04.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>Dagwoods</div>   
+                    <img src="images/prim/img05.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 primSlides">
+                <div>
+                    <div>J&E Auto repair</div>   
+                    <img src="images/prim/img06.jpg" width="100%">
+                </div>
+            </div>
+
+
+
+            <div class="row" style="margin-bottom:60px;">
+                <div class="col-lg-4 col-lg-offset-4">
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="primBottom"></div>
+        <div><i class="fa fa-chevron-down" aria-hidden="true"></i></div>
+
+    </div>
+
+</section>
+
+
+
+
+<section class="row prim" id="prim" ng-show="showStore">
+    <div class="container">
+        <h1>Nos magasins détaillants</h1>
+        <div class="row">
+        </div>
+
+        <div class="row" style="padding:5px;">
+
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>IGA</div>   
+                    <img src="images/prim/img01.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>METRO</div>   
+                    <img src="images/prim/img02.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Canadian tire</div>   
+                    <img src="images/prim/img03.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Subway</div>   
+                    <img src="images/prim/img04.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Dagwood</div>   
+                    <img src="images/prim/img05.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>J&E Auto repair</div>   
+                    <img src="images/prim/img06.jpg" width="100%">
+                </div>
+            </div>
+
+        <div class="row primItems" id="primItemsMore" ng-show="primItemsMore">
+
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Midas</div>   
+                    <img src="images/prim/img07.jpg" width="100%">
+                </div>
+            </div>            
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>Ardene</div>   
+                    <img src="images/prim/img08.jpg" width="100%">
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>YvesSaintLaurent</div>   
+                    <img src="images/prim/img09.jpg" width="100%">
+                </div>
+            </div>            
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 primSlides">
+                <div>
+                    <div>METRO</div>   
+                    <img src="images/prim/img10.jpg" width="100%">
+                </div>
+            </div>
+
+        </div>
+
+        </div>
+
+        <div class="row" style="margin-bottom:60px;">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button class="btn btn-default" style="width:100%;margin:5px 0;font-size: 20px;">Liste de tous les détaillants</button>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
+<section id="store" ng-show="!showStore">
+<div class="container">
+<!--    <div class="row" class="">
+            <button type="button" class="btn btn-warning btn-md shopcard" data-toggle="modal" data-target="#myModal" ng-click="orderFinish()"><span class="glyphicon glyphicon-shopping-cart"></span> {{totalPrice | currency}} <sub>+TX</sub></button>  
+    </div>
+-->
+
+    <div class="row">
+  <!-- Modal -->
+  <div class="col-xs-12 modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Nom de client: <strong>{{signIn}}</strong></h4>
+        </div>
+        <div class="modal-body">
+          <table class="factorTable">
+            <tr><th>Produit</th><th>No.</th><th>Total</th></tr>
+            <tr ng-repeat="oneOrder in order">
+                <td>{{oneOrder.name}}</td><td>{{oneOrder.no}}</td><td>{{oneOrder.no*oneOrder.price | currency}}</td>
+            </tr>
+          </table>
+          <table class="totalTable">
+            <tr><td>Total</td><td>{{totalPrice | currency}}</td></tr>
+            <tr><td>TAX</td><td>{{totalPrice*15/100 | currency}}</td></tr>
+            <tr><td>Subtotal</td><td>{{totalPrice*115/100 | currency}}</td></tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="orderConfirmClicked()">Confirmer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product" ng-repeat="product in filteredTodos | orderBy : opt1">
+            <div>
+                <img src="{{product.image}}" height="150">
+                <p style="">{{product.name | uppercase}}</p>
+                <p>
+                    <span ng-show="product.promo">{{product.price-product.promo | currency}}</span> 
+                    <span ng-class="product.promo>0 ? 'strikethrough' : ''">{{product.price | currency}}</span>
+                </p>
+            </div>
+            <div class="order">
+                <button type="button" class="btn btn-default btn-sm" ng-click="negClicked(product)"><span class="glyphicon glyphicon-minus-sign"></span></button>
+                <input type="number" min="0" ng-model="product.no" ng-change="orderChanged()">
+                <button type="button" class="btn btn-default btn-sm" ng-click="posClicked(product)"><span class="glyphicon glyphicon-plus-sign"></span></button>
+            </div>
+        </div>
+    </div> 
+    <pagination 
+      ng-model="currentPage"
+      total-items="todos.length"
+      max-size="maxSize"  
+      boundary-links="true">
+    </pagination
+
+</section>
+
+

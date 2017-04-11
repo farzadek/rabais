@@ -1,0 +1,144 @@
+<div class="container" ng-controller="indtCtrl">
+
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">New data/Edit data</h1>
+            <ol class="breadcrumb">
+                <li><a href="#/">Home</a></li>
+                <li class="active">Enter/Edit data</li>
+            </ol>
+        </div>
+<!-- /.section-colored -->
+    </div>
+<!-- /.section-colored -->
+
+
+    <div class="row">
+        <div class="col-lg-2 col-sm-2">
+        <button style="margin-bottom:5px;" class="btn btn-success" ng-click="dtEdit('new')"><span class="glyphicon glyphicon-credit-card"></span> New</button>
+        </div>
+        <div class="col-lg-5 col-sm-5 boxArnd" ng-show="NeEd">
+            
+            <form method="POST">
+            <a href="" ng-click="closeEditBox()"><span style="z-index:500;float:right; font-size:1.4em;" class="glyphicon glyphicon-remove-circle"></span></a>
+              <fieldset class="form-group">
+            <div class="radio">
+                <label>
+                  <input type="radio" name="exin1" id="exin1" checked ng-click="inex1()">
+                  Expense
+                </label>
+                <label style="margin-left:15px;">
+                  <input type="radio" name="exin2" id="exin2" ng-click="inex2()">
+                  Income
+                </label>
+              </div>
+              </fieldset>
+
+              <fieldset class="form-group" ng-show="incm" ng-model="costItems">
+                <label for="exgrp">Expense Group</label>
+                <select class="form-control" id="exgrp" name="mgroup1">
+                  <option value="1">House</option>
+                  <option value="2">Transportation</option>
+                  <option value="3">Governmental</option>
+                  <option value="4">Dairies</option>
+                  <option value="5">Meat</option>
+                  <option value="6">Rice,Bread,...</option>
+                  <option value="7">Hygienic</option>
+                  <option value="8">Fruits,Vegetables,...</option>
+                  <option value="9">Drinks</option>
+                  <option value="10">Restaurant</option>
+                  <option value="11">Other foods</option>
+                  <option value="12">Baby</option>
+                  <option value="13">Clothes</option>
+                  <option value="14">Medication</option>
+                  <option value="15">Car</option>
+                  <option value="16">Other</option>
+                </select>
+              </fieldset>
+
+              <fieldset class="form-group" ng-show="!incm">
+                <label for="ingrp">Income Group</label>
+                <select class="form-control" id="ingrp" name="mgroup2">
+                  <option value="51">Quebec</option>
+                  <option value="52">Canada</option>
+                  <option value="53">College</option>
+                  <option value="55">Job</option>
+                  <option value="56">Others</option>
+                </select>
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="iDate">Date</label>
+                <input type="text" class="form-control" name="idate" ng-model="iDate" id="iDate" placeholder="YYYY-MM-DD" maxlength="10">
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="title">Description</label>
+                <input type="text" class="form-control" name="title" ng-model="title" id="title" placeholder="">
+              </fieldset>
+
+              <fieldset class="form-group">
+                <label for="amount1">Amount</label>
+                <input type="text" class="form-control" ng-model="amnt1" name="amount1" ng-blur="amntCh()" id="amount1" placeholder="0.00">
+                <span style="color:red" ng-show="amnt1Err">Only money amount (x.xx)</span>
+                <div class="checkbox">
+                    <label ng-show="isIncome">
+                    <input type="checkbox" ng-model="tx" id="tx" name="tax" ng-click="txCh()"> Tax
+                    </label>
+                    <span style="color:#333; margin-left:30px;">{{ amnt2 | currency }}</span>
+                </div>
+              </fieldset>
+             
+              <button type="submit" name="submit" class="btn btn-primary" ng-click="saveData()">Save</button>
+            </form>
+
+        </div>
+                <div class="col-lg-5 col-sm-5">
+                {{exin}}
+                </div>
+
+    </div>
+        <!-- /.row -->
+
+
+       <table class="table table-responsive table-striped">  
+         <thead>  
+           <tr>  
+             <th>Edit</th>  
+             <th><a href="" ng-click="order('mgroup')">GROUP</a></th>  
+             <th><a href="" ng-click="order('price')"> PRICE</a></th>  
+             <th><a href="" ng-click="order('dates')">DATE</a></th>  
+             <th><a href="" ng-click="order('title')">DESCRIPTION</a></th>  
+             <th><a href="" ng-click="order('expense')">EXPENSE</a></th>  
+           </tr>  
+         </thead>  
+         <tbody>  
+           <tr>  
+             <td></td>  
+             <td> <input type="text" ng-model="search.mgroup" /></td>  
+             <td> <input type="text" ng-model="search.price" /> </td>  
+             <td><input type="text" ng-model="search.date" /> </td>  
+             <td><input type="text" ng-model="search.title" /> </td>  
+             <td><input type="text" ng-model="search.expense" /> </td>  
+           </tr>  
+           <tr ng-repeat="user in actionData | orderBy:predicate:reverse | filter:paginate| filter:search">  
+             <td><button class="btn" ng-click="dtEdit(user.id)"><span class="glyphicon glyphicon-pencil"></span></button></td>  
+             <td>{{ user.mgroup }}</td>  
+             <td>{{ user.price1 }}</td>  
+             <td>{{ user.dates }}</td>  
+             <td>{{ user.title }}</td>  
+             <td>{{ user.expense==1?'Expense':'Income' }}</td>  
+           </tr>  
+         </tbody>  
+       </table>  
+       <pagination total-items="totalItems" ng-model="currentPage"  
+             max-size="15" boundary-links="true"  
+             items-per-page="numPerPage" class="pagination-sm">  
+       </pagination>
+
+
+    </div>
+    <!-- /.container -->
+
+

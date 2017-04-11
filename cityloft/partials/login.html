@@ -1,0 +1,60 @@
+<div ng-controller="LogCtrl">
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-12 col-sm-12">
+            <h1 class="page-header">Login/Register</h1>
+            <ol class="breadcrumb">
+                <li><a href="#/">Home</a></li>
+                <li class="active">Login</li>
+                <li><a href="#/register">Register</a></li>
+            </ol>
+        </div>
+
+    </div><!-- row -->
+
+<div class="section-colored text-center" style="background-color:rgb(246,246,246);">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-6 col-sm-12">
+                <h3>Login</h3>
+                <form role="form" method="POST" action="">
+                <div class="row">
+                    <div class="col-lg-3 col-sm-2"></div>
+                    <div class="form-group col-lg-6 col-sm-8">
+                    <span ng-show="!unFound" style="color:red;">Incorrect Username OR Password</span>
+                        <label for="uname">Username</label>
+                        <input type="text" name="luname" class="form-control" id="luname">
+                    </div>
+                </div>    
+
+                <div class="row">
+                    <div class="col-lg-3 col-sm-2"></div>
+                    <div class="form-group col-lg-6 col-sm-8">
+                        <label for="password">Password</label>
+                        <input type="password" name="lpassword" class="form-control" id="lpassword">
+                    </div>
+                    <div class="form-group col-lg-12 col-sm-12">
+                        <input type="hidden" name="loginbtn" value="login">
+                        <button type="submit" class="btn btn-primary" ng-click="lUserTest()">Login</button>
+                    </div>
+                </div>
+                <a href="#/register">I don't have Username/Password yet!</a>
+            </form>
+
+            </div>
+
+
+        </div>
+        <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+
+</div>
+<!-- /.section-colored -->
+
+</div>
