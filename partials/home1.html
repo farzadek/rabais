@@ -34,10 +34,10 @@
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
-                <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="selected" ng-change="sortOptionChanged()"></select>
+                <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="search.sort" ng-change="sortOptionChanged()"></select>
             </div>
             <div class="col-sm-3 col-xs-6">
-                <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="selected" ng-change="sortOptionChanged()"></select>
+                <select ng-options="cat as cat.label for cat in sortCatItems track by cat.id" ng-model="search.category" ng-change="sortCatOptionChanged()"></select>
             </div>
             <div class="col-sm-2 col-xs-4">
                 <button type="button" style="float: right;" class="btn btn-warning btn-md shopcard" data-toggle="modal" data-target="#myModal" ng-click="orderFinish()"><span class="glyphicon glyphicon-shopping-cart"></span> {{totalPrice | currency}} <sub>+TX</sub></button>
@@ -470,12 +470,8 @@
 
 <section id="store" ng-show="!showStore">
 <div class="container">
-<!--    <div class="row" class="">
-            <button type="button" class="btn btn-warning btn-md shopcard" data-toggle="modal" data-target="#myModal" ng-click="orderFinish()"><span class="glyphicon glyphicon-shopping-cart"></span> {{totalPrice | currency}} <sub>+TX</sub></button>  
-    </div>
--->
 
-    <div class="row">
+<div class="row">
   <!-- Modal -->
   <div class="col-xs-12 modal fade" id="myModal" role="dialog">
     <div class="modal-dialog modal-md">
@@ -494,7 +490,8 @@
           <table class="totalTable">
             <tr><td>Total</td><td>{{totalPrice | currency}}</td></tr>
             <tr><td>TAX</td><td>{{totalPrice*15/100 | currency}}</td></tr>
-            <tr><td>Subtotal</td><td>{{totalPrice*115/100 | currency}}</td></tr>
+            <tr><td>FEE ({{fee}}%)</td><td>{{(totalPrice*115/100)*fee/100 | currency}}</td></tr>
+            <tr><td>PAYABLE</td><td>{{(totalPrice*(115)/100)+((totalPrice*115/100)*fee/100) | currency}}</td></tr>
           </table>
         </div>
         <div class="modal-footer">
@@ -508,8 +505,8 @@
 
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product" ng-repeat="product in filtered = products | orderBy : opt1 | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
             <div>
-                <img src="{{product.image}}" height="150">
-                <p style="">{{product.name | uppercase}}</p>
+                <img src="{{product.image}}" height="150" alt="{{product.image}}">
+                <p>{{product.name | uppercase}}</p>
                 <p>
                     <span ng-show="product.promo">{{product.price-product.promo | currency}}</span> 
                     <span ng-class="product.promo>0 ? 'strikethrough' : ''">{{product.price | currency}}</span>

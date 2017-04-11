@@ -358,7 +358,7 @@ $scope.addMore = function(obj, $event){
                         /* ----- pagination ----- */
                             $scope.currentPage = 1;
                             $scope.totalItems = $scope.products.length;
-                            $scope.entryLimit = 8; 
+                            $scope.entryLimit = 12; 
                             $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
                         });
                         /* --------------------- */
@@ -379,10 +379,13 @@ $scope.addMore = function(obj, $event){
 
     $scope.orderChanged = function(){
         var total=0;
+        var _fee = 0;
         for(var i=0;i<$scope.products.length;i++){
             var product=$scope.products[i];
-            total+=product.price*product.no;
+            total+=(product.price*product.no)*115/100;
         }
+        if(total<2000){_fee=5;}else{if(total>2000 && total<=4000){_fee=4;}else{_fee=3;}}
+        $scope.fee = _fee;
         $scope.totalPrice=total;
     }
     $scope.posClicked = function(obj){
@@ -407,13 +410,18 @@ $scope.addMore = function(obj, $event){
 
     $scope.orderConfirmClicked = function(){
         bought='';
+        $scope.fee = 0;
         for(i=0;i<$scope.order.length;i++){
             bought+=$scope.order[i].name+' - '+$scope.order[i].no+'X'+$scope.order[i].price.toFixed(2)+'$\n';
         }
         bought += '________________________________________________\n';
         bought += 'TOTAL: '+$scope.totalPrice.toFixed(2)+ '$\n';
         bought += 'TAX: '+($scope.totalPrice*15/100).toFixed(2)+ '$\n';
-        bought += 'PAYABLE: '+($scope.totalPrice*115/100).toFixed(2)+ '$\n';
+        if(($scope.totalPrice*15/100)<1000){$scope.fee=3;}
+        else if(($scope.totalPrice*15/100)>1000 && ($scope.totalPrice*15/100)<3000){$scope.fee=4;}
+        else {$scope.fee=5;}
+        bought += 'FEE: '+(($scope.totalPrice*115/100)*$scope.fee/100).toFixed(2)+ '$\n';
+        bought += 'PAYABLE: '+($scope.totalPrice*(115+$scope.fee)/100).toFixed(2)+ '$\n';
 
         $.post("js/saveorder.php",
             {
@@ -426,6 +434,7 @@ $scope.addMore = function(obj, $event){
         $scope.product.no = 0;
     }
 
+    $scope.search = {};
     $scope.sortItems = [
         {id:1, label:'Titre (A-Z)', subItem:{name:'name'}},
         {id:2, label:'Titre (Z-A)', subItem:{name:'-name'}},
@@ -433,10 +442,18 @@ $scope.addMore = function(obj, $event){
         {id:4, label:'Prix (9-0)', subItem:{name:'-price'}},
         {id:5, label:'Category', subItem:{name:'cat'}}
     ];
+    $scope.sortCatItems = [
+        {id:1, label:'ALL', subItem:{name:''}},
+        {id:1, label:'CATEGORY 1', subItem:{name:'cat1'}},
+        {id:2, label:'CATEGORY 2', subItem:{name:'cat2'}},
+        {id:5, label:'CATEGORY 3', subItem:{name:'cat3'}}
+    ];
     $scope.opt1 = $scope.sortItems[0].subItem.name;
-    $scope.selected = $scope.sortItems[0];
+    $scope.search.sort = $scope.sortItems[0];
+    $scope.opt2 = $scope.sortCatItems[0].subItem.name;
+    $scope.search.category = $scope.sortCatItems[0];
     $scope.sortOptionChanged = function(){
-        $scope.opt1 = $scope.selected.subItem.name;
+        $scope.opt1 = $scope.search.sort.subItem.name;
     }
 
 /* ------------------ filterByCategory ------------ */
