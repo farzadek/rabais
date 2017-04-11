@@ -25,9 +25,17 @@ app.config(['$routeProvider', function ($routeProvider) {
     .when("/contact", {templateUrl: "partials/contact.html", controller: "contactCtrl"}) 
     .otherwise("/404", {templateUrl: "partials/404.html", controller: "PageCtrl"}); */
 }]);
-
 //==========================================================================================
-
+app.filter('startFrom', function () {
+    return function (input, start) {
+        if (input) {
+            start = +start;
+            return input.slice(start);
+        }
+        return [];
+    };
+});
+//==========================================================================================
 app.controller('homeCtrl', function ($scope , $http) {
 
     $scope.currentUser = '';
@@ -336,7 +344,7 @@ $scope.addMore = function(obj, $event){
             $http.get("js/userlist.php").success(function(data){
                 var found = false;
                 angular.forEach(data, function(value, key){
-                    if(value.username == $scope.usernameLogin && value.password == $scope.passwordLogin){ 
+//                    if(value.username == $scope.usernameLogin && value.password == $scope.passwordLogin){ 
                         found = true;
                         $scope.showStore = false;
                         $scope.signIn = value.name_user;
@@ -348,20 +356,14 @@ $scope.addMore = function(obj, $event){
                             $scope.products = response.data.products;
                         
                         /* ----- pagination ----- */
-                            $scope.todos = $scope.products;
-                            $scope.filteredTodos = []
-                            ,$scope.currentPage = 1
-                            ,$scope.numPerPage = 12
-                            ,$scope.maxSize = 5;  
-                            $scope.$watch('currentPage + numPerPage', function() {
-                                var begin = (($scope.currentPage - 1) * $scope.numPerPage)
-                                , end = begin + $scope.numPerPage;
-                                $scope.filteredTodos = $scope.todos.slice(begin, end);
-                            });
+                            $scope.currentPage = 1;
+                            $scope.totalItems = $scope.products.length;
+                            $scope.entryLimit = 8; 
+                            $scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
                         });
                         /* --------------------- */
-                    }
-                });             
+//                    }
+                });                 
                 if(!found){$scope.userNotFoundMessageShow = true;}
             })
             .error(function() {alert('System is not able to access user information!'); });
@@ -437,19 +439,7 @@ $scope.addMore = function(obj, $event){
         $scope.opt1 = $scope.selected.subItem.name;
     }
 
-/* ------------------ pagination ------------------ */
-
-/* ------------------------------------------------ */
-
 /* ------------------ filterByCategory ------------ */
-/*    $scope.letters= [{id:'grp1'}, {id:'grp2'}, {id:'grp3'}];
-    $scope.filterBy = ['grp1','grp2','grp3'];
-    $scope.filterCat = function(){
-        return $scope.products.filter(function(product){
-            return $scope.filterBy.indexOf(product.cat)!== -1;
-        });
-    };
-    $scope.roles=['grp1','grp2','grp3'];*/
 /* ------------------------------------------------ */
 
     $scope.inscriptTypeTitle = 'Login';
@@ -487,9 +477,6 @@ $scope.addMore = function(obj, $event){
                 else if($scope.inscriptType == 4)
                     {$scope.inscriptTypeTitle = 'Login';$scope.switch1 = false;$scope.switch2 = false;$scope.switch3 = false;$scope.loginsForm = true;}
     }
-
-
-
 
 
 

@@ -19,6 +19,7 @@
                 <li><a href="#/sell">Sell</a></li>
                 <li><a href="#/contact">Help & Contact</a></li>
             </ul>
+            <button ng-show="showSearchBar" class="btn btn-primary" ng-click="logedOut()" style="float: left;">Log out</button>
         </div>
         <li class="basket"><a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li> 
     </div>
@@ -26,26 +27,21 @@
 <section id="searchBar" ng-show="showSearchBar">
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 col-xs-12">
   
-            <div class="col-sm-2 col-xs-3">
-                <button class="btn btn-primary" ng-click="logedOut()" style="float: left;">Log out</button>
-            </div>
-            <div class="col-sm-5 col-xs-9" style="padding:0;">
+            <div class="col-sm-4 col-xs-6" style="padding:0;">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                        <button class="btn btn-primary" style="border-radius:0;" type="button">Search</button>
-                        </span>
                 </div>
             </div>
-            <div class="col-sm-3 col-xs-8">
+            <div class="col-sm-3 col-xs-6">
+                <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="selected" ng-change="sortOptionChanged()"></select>
+            </div>
+            <div class="col-sm-3 col-xs-6">
                 <select ng-options="item as item.label for item in sortItems track by item.id" ng-model="selected" ng-change="sortOptionChanged()"></select>
             </div>
             <div class="col-sm-2 col-xs-4">
                 <button type="button" style="float: right;" class="btn btn-warning btn-md shopcard" data-toggle="modal" data-target="#myModal" ng-click="orderFinish()"><span class="glyphicon glyphicon-shopping-cart"></span> {{totalPrice | currency}} <sub>+TX</sub></button>
             </div>
-        </div>
 
     </div>
 </div> 
@@ -471,7 +467,6 @@
     </div>
 </section>
 
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
 
 <section id="store" ng-show="!showStore">
 <div class="container">
@@ -511,7 +506,7 @@
 </div>
 
 
-        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product" ng-repeat="product in filteredTodos | orderBy : opt1">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 product" ng-repeat="product in filtered = products | orderBy : opt1 | startFrom:(currentPage-1)*entryLimit | limitTo:entryLimit">
             <div>
                 <img src="{{product.image}}" height="150">
                 <p style="">{{product.name | uppercase}}</p>
@@ -527,12 +522,7 @@
             </div>
         </div>
     </div> 
-    <pagination 
-      ng-model="currentPage"
-      total-items="todos.length"
-      max-size="maxSize"  
-      boundary-links="true">
-    </pagination
+    <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
 
 </section>
 
